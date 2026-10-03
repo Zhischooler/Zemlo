@@ -5,10 +5,11 @@ import { marked } from 'marked';
 
 marked.setOptions({ gfm: true, breaks: false });
 
-const currentRepo = process.env.GITHUB_REPOSITORY || config.repo;
-const utterancesRepo = process.env.GITHUB_REPOSITORY || config.utterancesRepo;
-
 export async function getStaticPaths() {
+  // 🔑 关键修复：必须在 getStaticPaths 内部定义，因为 Astro 会将其隔离执行
+  const currentRepo = process.env.GITHUB_REPOSITORY || config.repo;
+  const utterancesRepo = process.env.GITHUB_REPOSITORY || config.utterancesRepo;
+  
   const headers = import.meta.env.GITHUB_TOKEN
     ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
     : {};
@@ -18,11 +19,15 @@ export async function getStaticPaths() {
 
   return posts.map((post: any) => ({
     params: { id: String(post.number) },
-    props: { post, htmlContent: marked(post.body || '') }
+    props: { 
+      post, 
+      htmlContent: marked(post.body || ''),
+      utterancesRepo // 作为 prop 传递给模板，确保 100% 准确
+    }
   }));
 }
 
-const { post, htmlContent } = Astro.props;
+const { post, htmlContent, utterancesRepo } = Astro.props;
 ---
 
 <html lang="zh" class="dark">
@@ -52,7 +57,9 @@ const { post, htmlContent } = Astro.props;
       <h1>{post.title}</h1>
       <div class="post-meta">
         <time>{new Date(post.created_at).toLocaleDateString('zh-CN')}</time>
-        {post.labels.map((l: any) => (<span class="post-tag">{l.name}</span>))}
+        {post.labels.map((l: any) => (
+          <span class="post-tag">{l.name}</span>
+        ))}
       </div>
     </div>
 
