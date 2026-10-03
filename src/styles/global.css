@@ -1,7 +1,6 @@
 /* 引入 GitHub 官方 Markdown 样式 */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css');
 
-/* Gmeek 风格的核心颜色变量 */
 :root {
   --color-bg: #ffffff;
   --color-text: #24292f;
@@ -24,7 +23,6 @@
   --color-header-bg: #161b22;
 }
 
-/* 基础重置与排版 */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
@@ -34,150 +32,60 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-a {
-  color: var(--color-link);
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+a { color: var(--color-link); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-/* 布局容器 */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+.container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
 
-/* Header 样式 */
 .site-header {
   background-color: var(--color-header-bg);
   border-bottom: 1px solid var(--color-border);
   padding: 20px 0;
   margin-bottom: 40px;
 }
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.site-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0 0 4px 0;
-}
-.site-title:hover {
-  text-decoration: none;
-  color: var(--color-link);
-}
-.site-desc {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.header-right a {
-  font-size: 14px;
-  color: var(--color-text);
-  font-weight: 500;
-}
+.header-inner { display: flex; justify-content: space-between; align-items: center; }
+.site-title { font-size: 20px; font-weight: 600; color: var(--color-text); margin: 0 0 4px 0; }
+.site-title:hover { text-decoration: none; color: var(--color-link); }
+.site-desc { font-size: 14px; color: var(--color-text-secondary); margin: 0; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+.header-right a { font-size: 14px; color: var(--color-text); font-weight: 500; }
 .theme-toggle {
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 16px;
-  color: var(--color-text);
+  background: none; border: 1px solid var(--color-border); border-radius: 6px;
+  padding: 4px 8px; cursor: pointer; font-size: 16px; color: var(--color-text);
 }
 
-/* 文章列表样式 */
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.post-item {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-border);
-}
-.post-item:last-child {
-  border-bottom: none;
-}
-.post-title-link {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 1.4;
-}
-.post-title-link:hover {
-  color: var(--color-link);
-  text-decoration: none;
-}
-.post-meta {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
-.post-tag {
-  display: inline-block;
-  padding: 0 7px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  border-radius: 2em;
-  background-color: var(--color-tag-bg);
-  color: var(--color-tag-text);
-}
+.post-list { list-style: none; padding: 0; margin: 0; }
+.post-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border); }
+.post-item:last-child { border-bottom: none; }
+.post-title-link { font-size: 20px; font-weight: 600; color: var(--color-text); line-height: 1.4; }
+.post-title-link:hover { color: var(--color-link); text-decoration: none; }
+.post-meta { margin-top: 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--color-text-secondary); }
+.post-tag { display: inline-block; padding: 0 7px; font-size: 12px; font-weight: 500; line-height: 18px; border-radius: 2em; background-color: var(--color-tag-bg); color: var(--color-tag-text); }
 
-/* 文章详情页样式 */
-.post-header {
-  margin-bottom: 32px;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 16px;
-}
-.post-header h1 {
-  font-size: 32px;
-  font-weight: 600;
-  margin: 0 0 12px 0;
-  line-height: 1.25;
-}
+.post-header { margin-bottom: 32px; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; }
+.post-header h1 { font-size: 32px; font-weight: 600; margin: 0 0 12px 0; line-height: 1.25; }
 
-/* 适配 GitHub Markdown 样式到深色模式 */
+.site-footer { margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--color-border); text-align: center; font-size: 12px; color: var(--color-text-secondary); }
+
 .dark .markdown-body {
-  color: var(--color-text);
+  background-color: #0d1117 !important;
+  color: #c9d1d9 !important;
 }
-.dark .markdown-body a {
-  color: var(--color-link);
+.dark .markdown-body h1, .dark .markdown-body h2, .dark .markdown-body h3, 
+.dark .markdown-body h4, .dark .markdown-body h5, .dark .markdown-body h6 {
+  color: #c9d1d9 !important; border-bottom-color: #21262d !important;
 }
-.dark .markdown-body h1, 
-.dark .markdown-body h2 {
-  border-color: var(--color-border);
-}
-.dark .markdown-body blockquote {
-  border-color: var(--color-border);
-  color: var(--color-text-secondary);
-}
+.dark .markdown-body a { color: #58a6ff !important; }
+.dark .markdown-body strong { color: #c9d1d9 !important; }
 .dark .markdown-body code {
-  background-color: var(--color-tag-bg);
+  background-color: rgba(110,118,129,0.4) !important;
+  color: #c9d1d9 !important; padding: 0.2em 0.4em !important; border-radius: 6px !important;
 }
-
-/* Footer 样式 */
-.site-footer {
-  margin-top: 60px;
-  padding: 20px 0;
-  border-top: 1px solid var(--color-border);
-  text-align: center;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-}
+.dark .markdown-body pre { background-color: #161b22 !important; }
+.dark .markdown-body pre code { background-color: transparent !important; padding: 0 !important; }
+.dark .markdown-body blockquote { border-left-color: #3b434b !important; color: #8b949e !important; }
+.dark .markdown-body table th, .dark .markdown-body table td { border-color: #30363d !important; }
+.dark .markdown-body table tr { background-color: #0d1117 !important; border-color: #30363d !important; }
+.dark .markdown-body table tr:nth-child(2n) { background-color: #161b22 !important; }
+.dark .markdown-body img { background-color: #0d1117 !important; }
+.dark .markdown-body hr { border-color: #21262d !important; }
