@@ -23,11 +23,12 @@ const posts = await res.json();
   <header class="site-header">
     <div class="container header-inner">
       <div>
-        <a href="/" class="site-title">{config.title}</a>
+        <!-- 使用 BASE_URL 替代 "/" 防止子目录 404 -->
+        <a href={import.meta.env.BASE_URL} class="site-title">{config.title}</a>
         <p class="site-desc">{config.description}</p>
       </div>
       <div class="header-right">
-        <a href="/">Home</a>
+        <a href={import.meta.env.BASE_URL}>Home</a>
         <button class="theme-toggle" id="theme-toggle">🌙</button>
       </div>
     </div>
@@ -60,11 +61,7 @@ const posts = await res.json();
   <script>
     const toggleBtn = document.getElementById('theme-toggle');
     const htmlEl = document.documentElement;
-    
-    if (htmlEl.classList.contains('dark')) {
-      toggleBtn.textContent = '☀️';
-    }
-
+    if (htmlEl.classList.contains('dark')) toggleBtn.textContent = '☀️';
     toggleBtn.addEventListener('click', () => {
       htmlEl.classList.toggle('dark');
       toggleBtn.textContent = htmlEl.classList.contains('dark') ? '☀️' : '🌙';
