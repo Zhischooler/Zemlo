@@ -2,14 +2,14 @@
 import config from '../../public/config.json';
 import '../styles/global.css';
 
+// 🔑 模板核心：优先使用 Actions 传入的仓库名，本地开发 fallback 到 config
+const currentRepo = process.env.GITHUB_REPOSITORY || config.repo;
+
 const headers = import.meta.env.GITHUB_TOKEN
   ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
   : {};
 
-const res = await fetch(
-  `https://api.github.com/repos/${config.repo}/issues?state=open`,
-  { headers }
-);
+const res = await fetch(`https://api.github.com/repos/${currentRepo}/issues?state=open`, { headers });
 const posts = await res.json();
 ---
 
@@ -23,7 +23,6 @@ const posts = await res.json();
   <header class="site-header">
     <div class="container header-inner">
       <div>
-        <!-- 使用 BASE_URL 替代 "/" 防止子目录 404 -->
         <a href={import.meta.env.BASE_URL} class="site-title">{config.title}</a>
         <p class="site-desc">{config.description}</p>
       </div>
@@ -44,9 +43,7 @@ const posts = await res.json();
             <a href={`post/${post.number}`} class="post-title-link">{post.title}</a>
             <div class="post-meta">
               <time>{new Date(post.created_at).toLocaleDateString('zh-CN')}</time>
-              {post.labels.map((l: any) => (
-                <span class="post-tag">{l.name}</span>
-              ))}
+              {post.labels.map((l: any) => (<span class="post-tag">{l.name}</span>))}
             </div>
           </li>
         ))}
@@ -55,7 +52,7 @@ const posts = await res.json();
   </main>
 
   <footer class="site-footer container">
-    <p>Powered by Gmeek style & GitHub Pages.</p>
+    <p>Powered by <a href="https://github.com/Zhischooler/zemlo" target="_blank">Zemlo</a> & GitHub Pages.</p>
   </footer>
 
   <script>
