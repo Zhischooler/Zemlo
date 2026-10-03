@@ -1,9 +1,7 @@
 name: Deploy Zemlo
+
 on:
-  push:
-    branches: [ main ]
-  issues:
-    types: [opened, edited, deleted, labeled, unlabeled]
+  # 只允许手动触发
   workflow_dispatch:
 
 permissions:
@@ -23,20 +21,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-        
-      
-      - name: Build
+          
+      - name: Build Site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           npm install
           npm run build
-      
+          
       - uses: actions/configure-pages@v4
       
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-      
+          
       - uses: actions/deploy-pages@v4
         id: deployment
