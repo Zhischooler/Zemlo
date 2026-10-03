@@ -5,15 +5,15 @@ import { marked } from 'marked';
 
 marked.setOptions({ gfm: true, breaks: false });
 
+const currentRepo = process.env.GITHUB_REPOSITORY || config.repo;
+const utterancesRepo = process.env.GITHUB_REPOSITORY || config.utterancesRepo;
+
 export async function getStaticPaths() {
   const headers = import.meta.env.GITHUB_TOKEN
     ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
     : {};
 
-  const res = await fetch(
-    `https://api.github.com/repos/${config.repo}/issues?state=open`,
-    { headers }
-  );
+  const res = await fetch(`https://api.github.com/repos/${currentRepo}/issues?state=open`, { headers });
   const posts = await res.json();
 
   return posts.map((post: any) => ({
@@ -46,16 +46,13 @@ const { post, htmlContent } = Astro.props;
   </header>
 
   <main class="container">
-    <!-- 🔑 使用 BASE_URL 彻底解决相对路径 404 问题 -->
     <a href={import.meta.env.BASE_URL} style="font-size: 14px; margin-bottom: 16px; display: inline-block;">← 返回列表</a>
     
     <div class="post-header">
       <h1>{post.title}</h1>
       <div class="post-meta">
         <time>{new Date(post.created_at).toLocaleDateString('zh-CN')}</time>
-        {post.labels.map((l: any) => (
-          <span class="post-tag">{l.name}</span>
-        ))}
+        {post.labels.map((l: any) => (<span class="post-tag">{l.name}</span>))}
       </div>
     </div>
 
@@ -67,7 +64,7 @@ const { post, htmlContent } = Astro.props;
       <script is:inline>
         const s = document.createElement('script');
         s.src = 'https://utteranc.es/client.js';
-        s.setAttribute('repo', '{config.utterancesRepo}');
+        s.setAttribute('repo', '{utterancesRepo}');
         s.setAttribute('issue-term', 'pathname');
         s.setAttribute('theme', 'github-dark');
         s.setAttribute('crossorigin', 'anonymous');
@@ -78,7 +75,7 @@ const { post, htmlContent } = Astro.props;
   </main>
 
   <footer class="site-footer container">
-    <p>Powered by Gmeek style & GitHub Pages.</p>
+    <p>Powered by <a href="https://github.com/Zhischooler/zemlo" target="_blank">Zemlo</a> & GitHub Pages.</p>
   </footer>
 
   <script>
