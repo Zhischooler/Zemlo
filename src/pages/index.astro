@@ -1,0 +1,74 @@
+---
+import config from '../../public/config.json';
+import '../styles/global.css';
+
+const headers = import.meta.env.GITHUB_TOKEN
+  ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
+  : {};
+
+const res = await fetch(
+  `https://api.github.com/repos/${config.repo}/issues?state=open`,
+  { headers }
+);
+const posts = await res.json();
+---
+
+<html lang="zh" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{config.title}</title>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <a href="/" class="site-title">{config.title}</a>
+        <p class="site-desc">{config.description}</p>
+      </div>
+      <div class="header-right">
+        <a href="/">Home</a>
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    {posts.length === 0 ? (
+      <p style="color: var(--color-text-secondary);">暂无文章，请在 GitHub Issues 中创建。</p>
+    ) : (
+      <ul class="post-list">
+        {posts.map((post: any) => (
+          <li class="post-item">
+            <a href={`post/${post.number}`} class="post-title-link">{post.title}</a>
+            <div class="post-meta">
+              <time>{new Date(post.created_at).toLocaleDateString('zh-CN')}</time>
+              {post.labels.map((l: any) => (
+                <span class="post-tag">{l.name}</span>
+              ))}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+
+  <footer class="site-footer container">
+    <p>Powered by Gmeek style & GitHub Pages.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    if (htmlEl.classList.contains('dark')) {
+      toggleBtn.textContent = '☀️';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      toggleBtn.textContent = htmlEl.classList.contains('dark') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>

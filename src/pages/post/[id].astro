@@ -1,0 +1,100 @@
+---
+import config from '../../../public/config.json';
+import '../../styles/global.css';
+import { marked } from 'marked';
+
+marked.setOptions({ gfm: true, breaks: false });
+
+export async function getStaticPaths() {
+  const headers = import.meta.env.GITHUB_TOKEN
+    ? { Authorization: `Bearer ${import.meta.env.GITHUB_TOKEN}` }
+    : {};
+
+  const res = await fetch(
+    `https://api.github.com/repos/${config.repo}/issues?state=open`,
+    { headers }
+  );
+  const posts = await res.json();
+
+  return posts.map((post: any) => ({
+    params: { id: String(post.number) },
+    props: { 
+      post,
+      htmlContent: marked(post.body || '')
+    }
+  }));
+}
+
+const { post, htmlContent } = Astro.props;
+---
+
+<html lang="zh" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{post.title} | {config.title}</title>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <a href="/" class="site-title">{config.title}</a>
+        <p class="site-desc">{config.description}</p>
+      </div>
+      <div class="header-right">
+        <a href="/">Home</a>
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../" style="font-size: 14px; margin-bottom: 16px; display: inline-block;">← 返回列表</a>
+    
+    <div class="post-header">
+      <h1>{post.title}</h1>
+      <div class="post-meta">
+        <time>{new Date(post.created_at).toLocaleDateString('zh-CN')}</time>
+        {post.labels.map((l: any) => (
+          <span class="post-tag">{l.name}</span>
+        ))}
+      </div>
+    </div>
+
+    <article class="markdown-body">
+      <div set:html={htmlContent}></div>
+    </article>
+
+    <div style="margin-top: 48px;" id="comments">
+      <script is:inline>
+        const s = document.createElement('script');
+        s.src = 'https://utteranc.es/client.js';
+        s.setAttribute('repo', '{config.utterancesRepo}');
+        s.setAttribute('issue-term', 'pathname');
+        s.setAttribute('theme', 'github-dark');
+        s.setAttribute('crossorigin', 'anonymous');
+        s.async = true;
+        document.getElementById('comments').appendChild(s);
+      </script>
+    </div>
+  </main>
+
+  <footer class="site-footer container">
+    <p>Powered by Gmeek style & GitHub Pages.</p>
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+    
+    if (htmlEl.classList.contains('dark')) {
+      toggleBtn.textContent = '☀️';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      toggleBtn.textContent = htmlEl.classList.contains('dark') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
