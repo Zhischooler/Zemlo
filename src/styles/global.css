@@ -1,58 +1,29 @@
-/* 引入 GitHub 官方 Markdown 样式 */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css');
 
 :root {
-  --color-bg: #ffffff;
-  --color-text: #24292f;
-  --color-text-secondary: #57606a;
-  --color-border: #d0d7de;
-  --color-link: #0969da;
-  --color-tag-bg: #f6f8fa;
-  --color-tag-text: #57606a;
-  --color-header-bg: #f6f8fa;
+  --color-bg: #ffffff; --color-text: #24292f; --color-text-secondary: #57606a;
+  --color-border: #d0d7de; --color-link: #0969da; --color-tag-bg: #f6f8fa;
+  --color-tag-text: #57606a; --color-header-bg: #f6f8fa;
 }
-
 .dark {
-  --color-bg: #0d1117;
-  --color-text: #c9d1d9;
-  --color-text-secondary: #8b949e;
-  --color-border: #30363d;
-  --color-link: #58a6ff;
-  --color-tag-bg: #21262d;
-  --color-tag-text: #8b949e;
-  --color-header-bg: #161b22;
+  --color-bg: #0d1117; --color-text: #c9d1d9; --color-text-secondary: #8b949e;
+  --color-border: #30363d; --color-link: #58a6ff; --color-tag-bg: #21262d;
+  --color-tag-text: #8b949e; --color-header-bg: #161b22;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.5;
-  transition: background-color 0.3s, color 0.3s;
-}
-
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background-color: var(--color-bg); color: var(--color-text); line-height: 1.5; transition: background-color 0.3s, color 0.3s; }
 a { color: var(--color-link); text-decoration: none; }
 a:hover { text-decoration: underline; }
-
 .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
 
-.site-header {
-  background-color: var(--color-header-bg);
-  border-bottom: 1px solid var(--color-border);
-  padding: 20px 0;
-  margin-bottom: 40px;
-}
+.site-header { background-color: var(--color-header-bg); border-bottom: 1px solid var(--color-border); padding: 20px 0; margin-bottom: 40px; }
 .header-inner { display: flex; justify-content: space-between; align-items: center; }
 .site-title { font-size: 20px; font-weight: 600; color: var(--color-text); margin: 0 0 4px 0; }
 .site-title:hover { text-decoration: none; color: var(--color-link); }
 .site-desc { font-size: 14px; color: var(--color-text-secondary); margin: 0; }
 .header-right { display: flex; align-items: center; gap: 16px; }
 .header-right a { font-size: 14px; color: var(--color-text); font-weight: 500; }
-.theme-toggle {
-  background: none; border: 1px solid var(--color-border); border-radius: 6px;
-  padding: 4px 8px; cursor: pointer; font-size: 16px; color: var(--color-text);
-}
+.theme-toggle { background: none; border: 1px solid var(--color-border); border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 16px; color: var(--color-text); }
 
 .post-list { list-style: none; padding: 0; margin: 0; }
 .post-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border); }
@@ -64,23 +35,14 @@ a:hover { text-decoration: underline; }
 
 .post-header { margin-bottom: 32px; border-bottom: 1px solid var(--color-border); padding-bottom: 16px; }
 .post-header h1 { font-size: 32px; font-weight: 600; margin: 0 0 12px 0; line-height: 1.25; }
-
 .site-footer { margin-top: 60px; padding: 20px 0; border-top: 1px solid var(--color-border); text-align: center; font-size: 12px; color: var(--color-text-secondary); }
 
-.dark .markdown-body {
-  background-color: #0d1117 !important;
-  color: #c9d1d9 !important;
-}
-.dark .markdown-body h1, .dark .markdown-body h2, .dark .markdown-body h3, 
-.dark .markdown-body h4, .dark .markdown-body h5, .dark .markdown-body h6 {
-  color: #c9d1d9 !important; border-bottom-color: #21262d !important;
-}
+/* 🔑 强制覆盖深色模式下的 Markdown 样式 */
+.dark .markdown-body { background-color: #0d1117 !important; color: #c9d1d9 !important; }
+.dark .markdown-body h1, .dark .markdown-body h2, .dark .markdown-body h3, .dark .markdown-body h4, .dark .markdown-body h5, .dark .markdown-body h6 { color: #c9d1d9 !important; border-bottom-color: #21262d !important; }
 .dark .markdown-body a { color: #58a6ff !important; }
 .dark .markdown-body strong { color: #c9d1d9 !important; }
-.dark .markdown-body code {
-  background-color: rgba(110,118,129,0.4) !important;
-  color: #c9d1d9 !important; padding: 0.2em 0.4em !important; border-radius: 6px !important;
-}
+.dark .markdown-body code { background-color: rgba(110,118,129,0.4) !important; color: #c9d1d9 !important; padding: 0.2em 0.4em !important; border-radius: 6px !important; }
 .dark .markdown-body pre { background-color: #161b22 !important; }
 .dark .markdown-body pre code { background-color: transparent !important; padding: 0 !important; }
 .dark .markdown-body blockquote { border-left-color: #3b434b !important; color: #8b949e !important; }
